@@ -27,7 +27,7 @@ object RedisKeyValueStore {
       Configuration.getKeyValueStoreHost,
       Configuration.getKeyValueStorePort)
 
-    Configuration.redisStartUpCommands.foreach(command => connection.send(command))
+    //Configuration.redisStartUpCommands.foreach(command => connection)
     return new RedisKeyValueStore(connection);
   }
 }
