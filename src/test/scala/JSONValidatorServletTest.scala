@@ -53,32 +53,32 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
 
   test("POST /schema/ with valid data returns success") {
     post("/schema/example3", body=dataStore.getSchemaText("example2").get) {
-      status should equal(200)
+      status should equal(201)
       body should include("success")
       body should include("example3")
       assert(dataStore.getSchemaText("example3").isDefined)
     }
   }
 
-  test("POST /schema/ with invalid data returns failure") {
-    post("/schema/example4", body="{}{}{}{}}}}") {
+  test("POST /schema/ with invalid json returns failure") {
+    post("/validate/example2", body="][") {
       status should equal(400)
       body should include("error")
-      body should include("example4")
+      body should include("example2")
       body should include("Invalid JSON")
       assert(dataStore.getSchemaText("example4").isEmpty)
     }
   }
 
   test("POST /validate/ with invalid id returns failure") {
-    post("/schema/unknown", body="{}") {
+    post("/validate/unknown", body="{}") {
       assert(status === 404)
       assert(body.contains("schema not found"))
     }
   }
 
   test("POST /validate/ with invalid data returns failure") {
-    post("/schema/example2", body="{\"age\": -20}") {
+    post("/validate/example2", body="{\"age\": -20}") {
       assert(status === 422) // unprocessable entity
       body should include("action")
       body should include("id")
@@ -88,8 +88,8 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
   }
 
   test("POST /validate/ with valid data returns success") {
-    post("/schema/example2", body="{\"firstName\": \"amartya\"}") {
-      assert(status === 200)
+    post("/validate/example2", body="{\"firstName\": \"amartya\"}") {
+      assert(status === 202)
       body should include("action")
       body should include("id")
       body should include("status")
@@ -97,7 +97,7 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
   }
 
   test("POST /validate/ with nullable valid data removes nulls and returns failure") {
-    post("/schema/example2", body="{\"firstName\": null}") {
+    post("/validate/example2", body="{\"firstName\": null}") {
       assert(status === 422) // unprocessable entity
       body should include("action")
       body should include("id")
