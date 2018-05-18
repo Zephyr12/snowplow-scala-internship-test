@@ -13,5 +13,6 @@ libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra-scalatest" % "2.6.3" % "test",
   "javax.servlet" % "javax.servlet-api" % "3.1.0",
   "org.scalatra" %% "scalatra-json" % "2.6.+",
-  "org.json4s"   %% "json4s-native" % "3.5.2"
+  "org.json4s"   %% "json4s-native" % "3.5.2",
+  "org.eclipse.jetty" % "jetty-webapp" % "9.4.9.v20180320" % "compile"
 )
