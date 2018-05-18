@@ -1,3 +1,9 @@
+/*
+
+Borrowed from the example at http://scalatra.org/guides/2.4/deployment/standalone.html
+
+ */
+
 package com.example  // remember this package in the sbt project definition
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.{DefaultServlet, ServletContextHandler}

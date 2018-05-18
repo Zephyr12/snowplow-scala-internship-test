@@ -1,4 +1,16 @@
-# Todo
+# To run
+
+On a linux like system. The app uses the redis key value store and sbt to function
+
+```
+$ sbt assembly
+$ redis-server
+$ java -jar target/scala-2.12/JSONValididatorAPI*
+```
+
+The application will be hosted on on localhost:8080
+
+# Development Notes
 
 * Set up API
     * Need JSON Library
