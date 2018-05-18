@@ -12,6 +12,8 @@ The application will be hosted on on localhost:8080
 
 # Development Notes
 
+* TDD
+
 * Set up API
     * Need JSON Library
         * Standard lib
