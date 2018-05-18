@@ -51,4 +51,24 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
     }
   }
 
+  test("POST /schema/ with valid data returns success") {
+    post("/schema/example3", body=dataStore.getSchemaText("example2").get) {
+      status should equal(200)
+      body should include("success")
+      body should include("example3")
+      assert(dataStore.getSchemaText("example3").isDefined)
+    }
+  }
+
+  test("POST /schema/ with invalid data returns failure") {
+    post("/schema/example4", body="{}{}{}{}}}}") {
+      status should equal(400)
+      body should include("error")
+      body should include("example4")
+      body should include("Invalid JSON")
+      assert(dataStore.getSchemaText("example4").isEmpty)
+    }
+  }
+
+
 }
