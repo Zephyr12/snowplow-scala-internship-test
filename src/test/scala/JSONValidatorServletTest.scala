@@ -70,5 +70,40 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
     }
   }
 
+  test("POST /validate/ with invalid id returns failure") {
+    post("/schema/unknown", body="{}") {
+      assert(status === 404)
+      assert(body.contains("schema not found"))
+    }
+  }
+
+  test("POST /validate/ with invalid data returns failure") {
+    post("/schema/example2", body="{\"age\": -20}") {
+      assert(status === 422) // unprocessable entity
+      body should include("action")
+      body should include("id")
+      body should include("status")
+      body should include("message")
+    }
+  }
+
+  test("POST /validate/ with valid data returns success") {
+    post("/schema/example2", body="{\"firstName\": \"amartya\"}") {
+      assert(status === 200)
+      body should include("action")
+      body should include("id")
+      body should include("status")
+    }
+  }
+
+  test("POST /validate/ with nullable valid data removes nulls and returns failure") {
+    post("/schema/example2", body="{\"firstName\": null}") {
+      assert(status === 422) // unprocessable entity
+      body should include("action")
+      body should include("id")
+      body should include("status")
+      body should include("message")
+    }
+  }
 
 }
