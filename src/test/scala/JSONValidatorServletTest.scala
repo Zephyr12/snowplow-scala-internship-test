@@ -5,9 +5,7 @@ import org.scalatra.test.scalatest._;
 
 class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
 
-  implicit var dataStore : JSONSchemaStore = _;
-  before {
-    dataStore = new JSONSchemaStore(new KeyValueStore {
+  implicit var dataStore : JSONSchemaStore = new JSONSchemaStore(new KeyValueStore {
       var mapping = Map(
         "example2" ->
           """
@@ -36,7 +34,6 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
         mapping = mapping.updated(key, value)
     })
 
-  }
   addServlet(new JSONValidatorServlet, "/*")
 
 
@@ -50,7 +47,7 @@ class JSONValidatorServletTest extends ScalatraFunSuite with BeforeAndAfter {
   test("GET /schema/ with known id returns valid response") {
     get("/schema/example2") {
       status should equal(200)
-    //  body should equal(dataStore.getSchemaText("example2"))
+      body should equal(dataStore.getSchemaText("example2").get)
     }
   }
 

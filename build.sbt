@@ -11,5 +11,7 @@ libraryDependencies ++= Seq(
   "com.github.java-json-tools" % "json-schema-validator" % "2.2.10",
   "org.scalatra" %% "scalatra" % "2.6.+",
   "org.scalatra" %% "scalatra-scalatest" % "2.6.3" % "test",
-  "javax.servlet" % "javax.servlet-api" % "3.1.0"
+  "javax.servlet" % "javax.servlet-api" % "3.1.0",
+  "org.scalatra" %% "scalatra-json" % "2.6.+",
+  "org.json4s"   %% "json4s-native" % "3.5.2"
 )
